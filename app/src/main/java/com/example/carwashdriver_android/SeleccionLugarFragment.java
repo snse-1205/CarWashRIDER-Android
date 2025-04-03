@@ -21,7 +21,7 @@ public class SeleccionLugarFragment extends Fragment {
         btnLocal.setOnClickListener(v -> {
             requireActivity().getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, new SeleccionVehiculoFragment())
+                    .replace(R.id.fragment_container, new LocalFragment())
                     .addToBackStack(null)
                     .commit();
         });
@@ -29,13 +29,13 @@ public class SeleccionLugarFragment extends Fragment {
         btnDomicilio.setOnClickListener(v -> {
             requireActivity().getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, new SeleccionVehiculoFragment())
+                    .replace(R.id.fragment_container, new DomicilioFragment())
                     .addToBackStack(null)
                     .commit();
         });
 
-
         return view;
     }
 }
+
 
