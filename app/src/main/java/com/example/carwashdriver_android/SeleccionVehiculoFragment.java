@@ -22,7 +22,13 @@ public class SeleccionVehiculoFragment extends Fragment {
         Button agregar = view.findViewById(R.id.btnAgregarVehiculo);
 
         agregar.setOnClickListener(v -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new SeleccionServiciosFragment())
+                    .addToBackStack(null)
+                    .commit();
         });
+
 
         return view;
     }

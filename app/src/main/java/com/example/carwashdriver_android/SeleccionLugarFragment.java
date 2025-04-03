@@ -19,24 +19,21 @@ public class SeleccionLugarFragment extends Fragment {
         Button btnDomicilio = view.findViewById(R.id.btnDomicilio);
 
         btnLocal.setOnClickListener(v -> {
-
-            Fragment nextFragment = new SeleccionVehiculoFragment();
             requireActivity().getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, nextFragment)
+                    .replace(R.id.fragment_container, new SeleccionVehiculoFragment())
                     .addToBackStack(null)
                     .commit();
         });
 
         btnDomicilio.setOnClickListener(v -> {
-            // ✅ Ir al fragmento de selección de servicios (o domicilio)
-            Fragment nextFragment = new SeleccionServiciosFragment();
             requireActivity().getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, nextFragment)
+                    .replace(R.id.fragment_container, new SeleccionVehiculoFragment())
                     .addToBackStack(null)
                     .commit();
         });
+
 
         return view;
     }
