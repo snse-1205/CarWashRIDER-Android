@@ -35,7 +35,7 @@ public class DetallesTrabajo extends AppCompatActivity {
         listaEjemplo.add(new DetailsModel(104, "Lavado básico", "Revisar alfombras traseras", 1));
         listaEjemplo.add(new DetailsModel(105, "Desinfección interior", "Usar producto hipoalergénico", 6));
 
-        adapter = new AdapterDetails(listaEjemplo,getApplicationContext());
+        adapter = new AdapterDetails(listaEjemplo, this);
         recycleViewLista = findViewById(R.id.recycleViewListDetails);
         recycleViewLista.setLayoutManager((new LinearLayoutManager(this)));
         recycleViewLista.setAdapter(adapter);
