@@ -61,6 +61,10 @@ public class AdapterToDo extends RecyclerView.Adapter<AdapterToDo.ViewHolder> {
                 holder.estado.setColorFilter(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorErrorLight));
                 break;
         }
+
+        holder.cardItem.setOnClickListener(v -> {
+
+        });
     }
 
     /*
@@ -81,8 +85,6 @@ public class AdapterToDo extends RecyclerView.Adapter<AdapterToDo.ViewHolder> {
             super(itemView);
             titulo = itemView.findViewById(R.id.itemListTitulo);
             marca = itemView.findViewById(R.id.itemListMarca);
-            color = itemView.findViewById(R.id.itemListColor);
-            placa = itemView.findViewById(R.id.itemListPlaca);
             hora = itemView.findViewById(R.id.itemListHora);
             estado = itemView.findViewById(R.id.itemListEstado);
             icono = itemView.findViewById(R.id.itemListIcono);

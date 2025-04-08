@@ -67,25 +67,10 @@
                     android:id="@+id/itemListMarca"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Marca"
+                    android:text="Modalidad"
                     android:textColor="?attr/colorOnSurface"
                     android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/itemListColor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Color"
-                    android:textColor="?attr/colorOnSurface"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/itemListPlaca"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Numero de placa"
-                    android:textColor="?attr/colorOnSurface"
-                    android:textSize="18sp" />
             </LinearLayout>
 
             <!-- Estado alineado a la derecha -->
