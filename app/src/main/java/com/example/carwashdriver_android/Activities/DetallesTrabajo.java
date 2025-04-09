@@ -1,6 +1,7 @@
 package com.example.carwashdriver_android.Activities;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.carwashdriver_android.Adapters.AdapterDetails;
 import com.example.carwashdriver_android.Models.DetailsModel;
 import com.example.carwashdriver_android.R;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 
@@ -23,6 +25,7 @@ public class DetallesTrabajo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_detalles_trabajo);
+
 
         AdapterDetails adapter;
         RecyclerView recycleViewLista;
@@ -39,6 +42,12 @@ public class DetallesTrabajo extends AppCompatActivity {
         recycleViewLista = findViewById(R.id.recycleViewListDetails);
         recycleViewLista.setLayoutManager((new LinearLayoutManager(this)));
         recycleViewLista.setAdapter(adapter);
+
+        MaterialCardView btnEmpezarTrabajo = findViewById(R.id.itemListCardItemEmpezarTrabajo);
+        btnEmpezarTrabajo.setOnClickListener(v -> {
+            adapter.setPuedeInteractuar(true);
+            btnEmpezarTrabajo.setVisibility(View.GONE); // Ocultamos el botón si quieres
+        });
 
 
 

@@ -23,6 +23,13 @@ public class AdapterDetails extends RecyclerView.Adapter<AdapterDetails.ViewHold
     private ArrayList<DetailsModel> details;
     private Context context;
 
+    private boolean puedeInteractuar = false;
+
+    public void setPuedeInteractuar(boolean puedeInteractuar) {
+        this.puedeInteractuar = puedeInteractuar;
+    }
+
+
     public AdapterDetails(ArrayList<DetailsModel> details, Context context) {
         this.details = details;
         this.context = context;
@@ -55,7 +62,9 @@ public class AdapterDetails extends RecyclerView.Adapter<AdapterDetails.ViewHold
         }
 
         holder.main.setOnClickListener(v -> {
-
+            if (!puedeInteractuar) {
+                return; // Ignora el click si no ha empezado el trabajo
+            }
             if(holder.visibilidad){
                 holder.visibilidad=false;
                 holder.secondary.setVisibility(View.VISIBLE);

@@ -1,6 +1,10 @@
 package com.example.carwashdriver_android.Adapters;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.carwashdriver_android.Activities.DetallesTrabajo;
 import com.example.carwashdriver_android.Models.ToDoModel;
 import com.example.carwashdriver_android.R;
 import com.google.android.material.card.MaterialCardView;
@@ -37,10 +42,7 @@ public class AdapterToDo extends RecyclerView.Adapter<AdapterToDo.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ToDoModel toDo = toDoModel.get(position);
         holder.titulo.setText("Trabajo codigo: "+toDo.getId());
-        holder.color.setText(toDo.getColor());
         holder.hora.setText(toDo.getHoraTrabajo());
-        holder.placa.setText(toDo.getPlaca());
-        holder.marca.setText(toDo.getMarca());
 
         switch (toDo.getModalidad()){
             case 1:
@@ -63,7 +65,9 @@ public class AdapterToDo extends RecyclerView.Adapter<AdapterToDo.ViewHolder> {
         }
 
         holder.cardItem.setOnClickListener(v -> {
-
+            Intent intent = new Intent(context, DetallesTrabajo.class);
+            context.startActivity(intent);
+            //((Activity) context).finish();
         });
     }
 
@@ -78,13 +82,12 @@ public class AdapterToDo extends RecyclerView.Adapter<AdapterToDo.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView icono, estado;
-        TextView hora, placa, color, marca, titulo;
+        TextView hora, titulo;
         MaterialCardView cardItem;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             titulo = itemView.findViewById(R.id.itemListTitulo);
-            marca = itemView.findViewById(R.id.itemListMarca);
             hora = itemView.findViewById(R.id.itemListHora);
             estado = itemView.findViewById(R.id.itemListEstado);
             icono = itemView.findViewById(R.id.itemListIcono);

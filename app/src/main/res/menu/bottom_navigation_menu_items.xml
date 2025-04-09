@@ -3,20 +3,15 @@
     <item
         android:id="@+id/nav_historial"
         android:icon="?attr/actionModePasteDrawable"
-        android:title="Cotización" />
+        android:title="Historial" />
 
     <item
         android:id="@+id/nav_todo"
         android:icon="@android:drawable/ic_input_get"
-        android:title="Home" />
+        android:title="To Do" />
 
     <item
         android:id="@+id/nav_semana"
         android:icon="@android:drawable/checkbox_off_background"
-        android:title="Historial" />
-
-    <item
-        android:id="@+id/nav_vehiculo"
-        android:icon="@android:drawable/ic_dialog_info"
-        android:title="Vehículo" />
+        android:title="Semana" />
 </menu>
