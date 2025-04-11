@@ -14,6 +14,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.carwashdriver_android.Activities.PantallaPrincipal;
 import com.example.carwashdriver_android.Models.UsuarioModel;
 import com.example.carwashdriver_android.Retrofit.ApiService;
 import com.example.carwashdriver_android.Retrofit.ClientManager;
@@ -29,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnLogin;
     EditText txtCorreo, txtPassword;
-    TextView txtRegistro;
     ClientManager clientManager;
     private final ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
 
@@ -39,15 +39,45 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+        clientManager = new ClientManager(this);
+
+        txtCorreo = findViewById(R.id.editTextText);
+        txtPassword = findViewById(R.id.editTextTextPassword);
+
 
         btnLogin = findViewById(R.id.buttoningresar);
 
         btnLogin.setOnClickListener(v -> Login());
+        
+        verificarLogin();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+    }
+
+    private void verificarLogin() {
+        String token= "Bearer " + clientManager.getClientToken();
+        Call <Void> call = apiService.verifiarSesion(token);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.isSuccessful()){
+                    Log.e("Retrofit", "HOLIS :D : " + response.message());
+                    Intent intent =new Intent(getApplicationContext(), PantallaPrincipal.class);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    Log.e("Retrofit", "Fallo en la solicitud: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d("Retrofit", "Fallo en la solicitud: " + t.getMessage());
+            }
         });
     }
 
@@ -69,13 +99,16 @@ public class MainActivity extends AppCompatActivity {
                 public void onResponse(Call<UsuarioModel> call, Response<UsuarioModel> response) {
                     if(response.isSuccessful()){
                         UsuarioModel usuarioModel =response.body();
+                        Log.d("UsuarioModel", usuarioModel.toString());
+
                         clientManager.saveClientData(
                                 usuarioModel.getId(),
                                 usuarioModel.getUsername(),
                                 usuarioModel.getToken());
                         Log.d("Retrofit", "Inicio de secion exitoso");
-                        //Intent intent =new Intent(getApplicationContext(),Registro.class);
-                        //startActivity(intent);
+                        Intent intent =new Intent(getApplicationContext(), PantallaPrincipal.class);
+                        startActivity(intent);
+                        finish();
                     }else{
                         Log.e("Retrofit", "Fallo en la solicitud: " + response.message());
                     }

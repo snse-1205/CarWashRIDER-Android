@@ -3,7 +3,7 @@ package com.example.carwashdriver_android.Models;
 public class UsuarioModel {
     private int id;
     private String username;
-    private String accessToken;
+    private String token;
 
     public UsuarioModel() {
     }
@@ -11,7 +11,7 @@ public class UsuarioModel {
     public UsuarioModel(int id, String username, String accessToken) {
         this.id = id;
         this.username = username;
-        this.accessToken = accessToken;
+        this.token = accessToken;
     }
 
     public int getId() {
@@ -31,10 +31,18 @@ public class UsuarioModel {
     }
 
     public String getToken() {
-        return accessToken;
+        return token;
     }
 
     public void setToken(String token) {
-        this.accessToken = token;
+        this.token = token;
+    }
+
+    public String toString() {
+        return "UsuarioModel{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", token='" + token + '\'' +
+                '}';
     }
 }

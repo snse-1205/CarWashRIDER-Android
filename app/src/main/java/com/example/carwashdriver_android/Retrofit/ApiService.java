@@ -19,11 +19,13 @@ import retrofit2.http.Path;
 
 public interface ApiService {
 
-    @POST("auth/cliente")
+    @POST("auth/empleado")
     Call<UsuarioModel> login(
             @Body HashMap<String,String> body
     );
 
+    @GET("auth/verificar")
+    Call<Void> verifiarSesion(  @Header("Authorization") String token);
     /*@POST("user/")
     Call<String> registrarUsuario(@Body Map<String, String> body);
 
