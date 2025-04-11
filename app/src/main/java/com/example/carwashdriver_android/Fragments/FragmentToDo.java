@@ -63,16 +63,16 @@ public class FragmentToDo extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ArrayList<ToDoModel> listaToDos = new ArrayList<>();
 
-        listaToDos.add(new ToDoModel(1, 1, 1, "ABC123", "Rojo", "Toyota", "2025-04-10", "09:00"));
-        listaToDos.add(new ToDoModel(2, 2, 6, "XYZ789", "Azul", "Honda", "2025-04-11", "10:30"));
-        listaToDos.add(new ToDoModel(3, 1, 3, "LMN456", "Negro", "Ford", "2025-04-12", "11:15"));
-        listaToDos.add(new ToDoModel(4, 2, 1, "DEF321", "Blanco", "Nissan", "2025-04-13", "14:00"));
-        listaToDos.add(new ToDoModel(5, 1, 6, "GHI654", "Gris", "Mazda", "2025-04-14", "08:45"));
-        listaToDos.add(new ToDoModel(6, 2, 2, "JKL987", "Verde", "Chevrolet", "2025-04-15", "13:20"));
-        listaToDos.add(new ToDoModel(7, 1, 1, "QWE852", "Amarillo", "Hyundai", "2025-04-16", "15:10"));
-        listaToDos.add(new ToDoModel(8, 2, 6, "RTY963", "Plata", "Kia", "2025-04-17", "16:30"));
-        listaToDos.add(new ToDoModel(9, 1, 4, "UIO741", "Naranja", "Volkswagen", "2025-04-18", "17:00"));
-        listaToDos.add(new ToDoModel(10, 2, 1, "PAS369", "Vino", "Peugeot", "2025-04-19", "12:00"));
+        listaToDos.add(new ToDoModel(1, 1, 1,  "2025-04-10", "09:00"));
+        listaToDos.add(new ToDoModel(2, 2, 6,  "2025-04-11", "10:30"));
+        listaToDos.add(new ToDoModel(3, 1, 3,  "2025-04-12", "11:15"));
+        listaToDos.add(new ToDoModel(4, 2, 1,  "2025-04-13", "14:00"));
+        listaToDos.add(new ToDoModel(5, 1, 6, "2025-04-14", "08:45"));
+        listaToDos.add(new ToDoModel(6, 2, 2, "2025-04-15", "13:20"));
+        listaToDos.add(new ToDoModel(7, 1, 1,  "2025-04-16", "15:10"));
+        listaToDos.add(new ToDoModel(8, 2, 6,  "2025-04-17", "16:30"));
+        listaToDos.add(new ToDoModel(9, 1, 4, "2025-04-18", "17:00"));
+        listaToDos.add(new ToDoModel(10, 2, 1,  "2025-04-19", "12:00"));
 
         adapter = new AdapterToDo(getContext(),listaToDos);
         recycleViewLista =view.findViewById(R.id.recycleViewListToDo);

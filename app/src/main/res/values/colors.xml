@@ -26,7 +26,7 @@
     <color name="rosa_dulce">#FFDAE8</color>
 
     <!--Colores para el tema claro -->
-    <color name="colorPrimaryLight">#B2F7EF</color> <!-- Color principal -->
+    <color name="colorPrimaryLight">#4c979e</color> <!-- Color principal -->
     <color name="colorSecondaryLight">#757575</color> <!-- Color secundario -->
     <color name="colorBackgroundLight">#B2F7EF</color> <!-- Fondo claro -->
     <color name="colorOnBackgroundLight">#000000</color> <!-- Texto en el fondo claro -->

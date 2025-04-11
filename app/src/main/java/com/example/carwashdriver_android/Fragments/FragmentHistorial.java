@@ -3,12 +3,22 @@ package com.example.carwashdriver_android.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.carwashdriver_android.Adapters.AdapterHistorial;
+import com.example.carwashdriver_android.Adapters.AdapterSemana;
+import com.example.carwashdriver_android.Models.DetailsModel;
+import com.example.carwashdriver_android.Models.ToDoModel;
 import com.example.carwashdriver_android.R;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,4 +73,32 @@ public class FragmentHistorial extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_historial, container, false);
     }
+
+    RecyclerView recyclerView;
+    AdapterHistorial adapter;
+    ArrayList<DetailsModel> listaTrabajos;
+
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        recyclerView = view.findViewById(R.id.recycleViewListHistorial);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        listaTrabajos = obtenerTrabajosDePrueba();
+
+        adapter = new AdapterHistorial(getContext(), listaTrabajos);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private ArrayList<DetailsModel> obtenerTrabajosDePrueba() {
+        ArrayList<DetailsModel> lista = new ArrayList<>();
+
+        lista.add(new DetailsModel(101, "Lavado completo", "Dejar bien seco el interior", 1));
+        lista.add(new DetailsModel(102, "Encerado", "Cuidado con los rayones", 6));
+        lista.add(new DetailsModel(103, "Lavado de motor", "Evitar mojar componentes eléctricos", 1));
+        lista.add(new DetailsModel(104, "Lavado básico", "Revisar alfombras traseras", 1));
+        lista.add(new DetailsModel(105, "Desinfección interior", "Usar producto hipoalergénico", 6));
+
+        return lista;
+    }
+
 }
