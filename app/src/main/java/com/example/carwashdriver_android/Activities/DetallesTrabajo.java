@@ -61,7 +61,7 @@ public class DetallesTrabajo extends AppCompatActivity {
         MaterialCardView btnEmpezarTrabajo = findViewById(R.id.itemListCardItemEmpezarTrabajo);
         btnEmpezarTrabajo.setOnClickListener(v -> {
             adapter.setPuedeInteractuar(true);
-            btnEmpezarTrabajo.setVisibility(View.GONE); // Ocultamos el botón si quieres
+            btnEmpezarTrabajo.setVisibility(View.GONE);
         });
 
         MaterialCardView btnTrazarRuta = findViewById(R.id.itemListCardItemTrazarRuta);

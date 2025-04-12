@@ -21,12 +21,13 @@ import com.example.carwashdriver_android.R;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdapterToDo extends RecyclerView.Adapter<AdapterToDo.ViewHolder> {
     Context context;
-    ArrayList<ToDoModel> toDoModel;
+    List<ToDoModel> toDoModel;
 
-    public AdapterToDo(Context context, ArrayList<ToDoModel> arrayList){
+    public AdapterToDo(Context context, List<ToDoModel> arrayList){
         this.context = context;
         this.toDoModel = arrayList;
     }

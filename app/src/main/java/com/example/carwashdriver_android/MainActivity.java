@@ -19,6 +19,7 @@ import com.example.carwashdriver_android.Models.UsuarioModel;
 import com.example.carwashdriver_android.Retrofit.ApiService;
 import com.example.carwashdriver_android.Retrofit.ClientManager;
 import com.example.carwashdriver_android.Retrofit.RetrofitClient;
+import com.example.carwashdriver_android.Retrofit.SocketManager;
 
 import java.util.HashMap;
 
@@ -66,6 +67,12 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.isSuccessful()){
                     Log.e("Retrofit", "HOLIS :D : " + response.message());
+                    if (SocketManager.getSocket() == null || !SocketManager.getSocket().connected()) {
+                        SocketManager.initSocket();
+                        SocketManager.connect();
+                        SocketManager.setListeners();
+                    }
+
                     Intent intent =new Intent(getApplicationContext(), PantallaPrincipal.class);
                     startActivity(intent);
                     finish();
@@ -105,6 +112,12 @@ public class MainActivity extends AppCompatActivity {
                                 usuarioModel.getId(),
                                 usuarioModel.getUsername(),
                                 usuarioModel.getToken());
+
+                        SocketManager.initSocket();
+                        SocketManager.connect();
+                        SocketManager.setListeners();
+                        SocketManager.notifyUserConnected(usuarioModel.getUsername());
+
                         Log.d("Retrofit", "Inicio de secion exitoso");
                         Intent intent =new Intent(getApplicationContext(), PantallaPrincipal.class);
                         startActivity(intent);
