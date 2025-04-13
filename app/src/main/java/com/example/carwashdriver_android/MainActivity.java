@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -20,6 +21,9 @@ import com.example.carwashdriver_android.Retrofit.ApiService;
 import com.example.carwashdriver_android.Retrofit.ClientManager;
 import com.example.carwashdriver_android.Retrofit.RetrofitClient;
 import com.example.carwashdriver_android.Retrofit.SocketManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.HashMap;
 
@@ -51,12 +55,25 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(v -> Login());
         
         verificarLogin();
+        obtenerToken();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    private void obtenerToken() {
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if (!task.isSuccessful()) {
+                    System.out.println("Fetching FCM registration token failed");
+                    return;                }
+                // Get new FCM registration token
+                String token = task.getResult();
+                Log.d("TokenNoti",token);}});
     }
 
     private void verificarLogin() {
