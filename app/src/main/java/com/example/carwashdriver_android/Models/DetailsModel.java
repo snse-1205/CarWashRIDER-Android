@@ -2,36 +2,36 @@ package com.example.carwashdriver_android.Models;
 
 public class DetailsModel {
     int id;
-    String Servicio;
+    String servicio;
     String notaAdministrador;
     int estado;
     String nota;
     private int contadorMultimedia;
-    String nombreCLiente, marca,color,placa;
+    String nombreCliente, marca,color,placa;
     double lon,lat;
 
     //para gets de la informacion principal
-    public DetailsModel(double lat, double lon, String placa, String color, String marca, String nombreCLiente) {
+    public DetailsModel(double lat, double lon, String placa, String color, String marca, String nombreCliente) {
         this.lat = lat;
         this.lon = lon;
         this.placa = placa;
         this.color = color;
         this.marca = marca;
-        this.nombreCLiente = nombreCLiente;
+        this.nombreCliente = nombreCliente;
     }
 
-    public DetailsModel(String placa, String color, String marca, String nombreCLiente) {
+    public DetailsModel(String placa, String color, String marca, String nombreCliente) {
         this.placa = placa;
         this.color = color;
         this.marca = marca;
-        this.nombreCLiente = nombreCLiente;
+        this.nombreCliente = nombreCliente;
     }
 
 
     //para gets de los servicios
-    public DetailsModel(int id, String Servicio, String notaAdministrador, int estado) {
+    public DetailsModel(int id, String servicio, String notaAdministrador, int estado) {
         this.id = id;
-        this.Servicio = Servicio;
+        this.servicio = servicio;
         this.notaAdministrador = notaAdministrador;
         this.estado = estado;
     }
@@ -60,11 +60,11 @@ public class DetailsModel {
     }
 
     public String getServicio() {
-        return Servicio;
+        return servicio;
     }
 
     public void setServicio(String servicio) {
-        this.Servicio = servicio;
+        this.servicio = servicio;
     }
 
     public String getNotaAdministrador() {
@@ -91,12 +91,12 @@ public class DetailsModel {
         this.nota = nota;
     }
 
-    public String getNombreCLiente() {
-        return nombreCLiente;
+    public String getNombreCliente() {
+        return nombreCliente;
     }
 
-    public void setNombreCLiente(String nombreCLiente) {
-        this.nombreCLiente = nombreCLiente;
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
     }
 
     public String getMarca() {
@@ -143,11 +143,11 @@ public class DetailsModel {
     public String toString() {
         return "DetailsModel{" +
                 "id=" + id +
-                ", servicio='" + Servicio + '\'' +
+                ", servicio='" + servicio + '\'' +
                 ", notaAdministrador='" + notaAdministrador + '\'' +
                 ", estado=" + estado +
                 ", nota='" + nota + '\'' +
-                ", nombreCLiente='" + nombreCLiente + '\'' +
+                ", nombreCLiente='" + nombreCliente + '\'' +
                 ", marca='" + marca + '\'' +
                 ", color='" + color + '\'' +
                 ", placa='" + placa + '\'' +

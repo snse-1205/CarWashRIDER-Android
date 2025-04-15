@@ -71,6 +71,7 @@ public class FragmentToDo extends Fragment {
         llenarDatos();
 
         if (!isListenerRegistered) {
+
             SocketManager.escucharEvento("Trabajos", trabajosListener);
             isListenerRegistered = true;
         }
@@ -106,6 +107,7 @@ public class FragmentToDo extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         SocketManager.dejarDeEscucharEvento("Trabajos");
-        isListenerRegistered = false;
+        isListenerRegistered = false;  // <- esto es clave
     }
+
 }

@@ -58,6 +58,7 @@ public class SocketManager {
 
     public static void escucharEvento(String evento, Emitter.Listener listener) {
         if (mSocket != null) {
+            Log.d("SOCKET", "Conectado al evento "+evento);
             registeredListeners.put(evento, listener);
             mSocket.on(evento, listener);
         }
@@ -67,6 +68,7 @@ public class SocketManager {
         if (mSocket != null) {
             Emitter.Listener listener = registeredListeners.get(evento);
             if (listener != null) {
+                Log.d("SOCKET", "Desconectando al evento "+evento);
                 mSocket.off(evento, listener);
                 registeredListeners.remove(evento);
             }

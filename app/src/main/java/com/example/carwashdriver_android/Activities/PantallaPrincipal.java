@@ -20,6 +20,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class PantallaPrincipal extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
+    private int currentSelectedItemId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +31,35 @@ public class PantallaPrincipal extends AppCompatActivity {
         // Configurar Bottom Navigation
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
+
         bottomNavigationView.setOnItemSelectedListener(item -> {
 
-            if (item.getItemId() == R.id.nav_todo) {
+            int itemId = item.getItemId();
+
+            if (itemId == currentSelectedItemId) {
+                Log.d("SOCKET", "Se ignoró el clic porque ya está en ese fragmento");
+                return false;
+            }
+
+            currentSelectedItemId = itemId;
+
+            // Llamamos al fragmento correspondiente de acuerdo con el itemId
+            if (itemId == R.id.nav_todo) {
+                Log.d("SOCKET", "Se preciono el boton del navbar");
                 abrirFragment(new FragmentToDo());
-            } else if (item.getItemId() == R.id.nav_historial) {
+            } else if (itemId == R.id.nav_historial) {
                 abrirFragment(new FragmentHistorial());
-            } else if (item.getItemId() == R.id.nav_semana) {
+            } else if (itemId == R.id.nav_semana) {
                 abrirFragment(new FragmentSemana());
             }
+
             return true;
+        });
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
         });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

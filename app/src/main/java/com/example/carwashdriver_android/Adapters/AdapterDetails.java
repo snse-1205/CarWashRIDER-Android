@@ -137,5 +137,4 @@ public class AdapterDetails extends RecyclerView.Adapter<AdapterDetails.ViewHold
     public interface OnDetalleActionListener {
         void onMarcarTrabajo(DetailsModel model);
     }
-
 }

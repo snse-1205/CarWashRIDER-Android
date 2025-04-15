@@ -87,11 +87,8 @@ public class DetallesTrabajo extends AppCompatActivity {
         estado = getIntent().getIntExtra("estadoCotizacion",0);
         clientManager = new ClientManager(this);
 
-        if(estado == 4){
-            adapter.setPuedeInteractuar(true);
-            btnEmpezarTrabajo.setVisibility(View.GONE);
-        }else{
-            SocketManager.escucharEvento("Trabajo",trabajosListener);
+        if(estado != 4) {
+            SocketManager.escucharEvento("Trabajo", trabajosListener);
         }
 
         if (!isListenerRegistered) {
@@ -154,7 +151,7 @@ public class DetallesTrabajo extends AppCompatActivity {
             public void onResponse(Call<DetailsModel> call, Response<DetailsModel> response) {
                 if(response.isSuccessful()){
                     informacionGeneral = response.body();
-                    cliente.setText(informacionGeneral.getNombreCLiente());
+                    cliente.setText(informacionGeneral.getNombreCliente());
                     marca.setText(informacionGeneral.getMarca());
                     placa.setText(informacionGeneral.getPlaca());
                     color.setText(informacionGeneral.getColor());
@@ -173,25 +170,30 @@ public class DetallesTrabajo extends AppCompatActivity {
     }
 
     private void llenarDatosDetalles(){
-        String token= "Bearer " + clientManager.getClientToken();
-        Call<List<DetailsModel>> call = apiService.obtenerDetallesTrabajo(token,idCotizacion);
+        String token = "Bearer " + clientManager.getClientToken();
+        Call<List<DetailsModel>> call = apiService.obtenerDetallesTrabajo(token, idCotizacion);
         call.enqueue(new Callback<List<DetailsModel>>() {
             @Override
             public void onResponse(Call<List<DetailsModel>> call, Response<List<DetailsModel>> response) {
-                if(response.isSuccessful()){
-                    if(response.body() != null){
-                        informacionDetalles.addAll(response.body());
+                if (response.isSuccessful() && response.body() != null) {
+                    informacionDetalles.addAll(response.body());
 
-                        adapter = new AdapterDetails(informacionDetalles, context, new AdapterDetails.OnDetalleActionListener() {
-                            @Override
-                            public void onMarcarTrabajo(DetailsModel model) {
-                                marcarTrabajo(model.getId());
-                            }
-                        });
-                        recycleViewLista.setLayoutManager((new LinearLayoutManager(context)));
-                        recycleViewLista.setAdapter(adapter);
+                    Log.d("Adapter", "Elementos cargados: " + informacionDetalles.size());
+                    adapter = new AdapterDetails(informacionDetalles, context, new AdapterDetails.OnDetalleActionListener() {
+                        @Override
+                        public void onMarcarTrabajo(DetailsModel model) {
+                            marcarTrabajo(model.getId());
+                        }
+                    });
+
+                    recycleViewLista.setLayoutManager(new LinearLayoutManager(context));
+                    recycleViewLista.setAdapter(adapter);
+
+                    if (estado == 4) {
+                        adapter.setPuedeInteractuar(true);
+                        btnEmpezarTrabajo.setVisibility(View.GONE);
                     }
-                }else {
+                } else {
                     Log.e("Retrofit", "Fallo en la solicitud: " + response.message());
                 }
             }
@@ -202,6 +204,7 @@ public class DetallesTrabajo extends AppCompatActivity {
             }
         });
     }
+
     private void actualizarDetalles() {
         String token = "Bearer " + clientManager.getClientToken();
         Call<List<DetailsModel>> call = apiService.obtenerDetallesTrabajo(token, idCotizacion);
