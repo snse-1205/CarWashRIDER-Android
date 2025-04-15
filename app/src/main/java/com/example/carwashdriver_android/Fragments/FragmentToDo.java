@@ -44,7 +44,6 @@ public class FragmentToDo extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -71,7 +70,6 @@ public class FragmentToDo extends Fragment {
         llenarDatos();
 
         if (!isListenerRegistered) {
-
             SocketManager.escucharEvento("Trabajos", trabajosListener);
             isListenerRegistered = true;
         }
