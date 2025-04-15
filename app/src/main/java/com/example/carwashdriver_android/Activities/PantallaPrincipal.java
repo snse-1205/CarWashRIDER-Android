@@ -1,6 +1,7 @@
 package com.example.carwashdriver_android.Activities;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.carwashdriver_android.Config.SocketManager;
 import com.example.carwashdriver_android.Fragments.FragmentHistorial;
 import com.example.carwashdriver_android.Fragments.FragmentSemana;
 import com.example.carwashdriver_android.Fragments.FragmentToDo;
@@ -62,5 +64,16 @@ public class PantallaPrincipal extends AppCompatActivity {
                 .replace(R.id.contenedorFragments, fragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Verificar si el socket está conectado, si no, reconectar
+        if (SocketManager.getSocket() == null || !SocketManager.getSocket().connected()) {
+            SocketManager.initSocket();
+            SocketManager.connect();
+        }
     }
 }

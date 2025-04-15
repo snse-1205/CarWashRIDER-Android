@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -18,9 +17,9 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.carwashdriver_android.Activities.PantallaPrincipal;
 import com.example.carwashdriver_android.Models.UsuarioModel;
 import com.example.carwashdriver_android.Retrofit.ApiService;
-import com.example.carwashdriver_android.Retrofit.ClientManager;
+import com.example.carwashdriver_android.Config.ClientManager;
 import com.example.carwashdriver_android.Retrofit.RetrofitClient;
-import com.example.carwashdriver_android.Retrofit.SocketManager;
+import com.example.carwashdriver_android.Config.SocketManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -87,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
                     if (SocketManager.getSocket() == null || !SocketManager.getSocket().connected()) {
                         SocketManager.initSocket();
                         SocketManager.connect();
-                        SocketManager.setListeners();
                     }
 
                     Intent intent =new Intent(getApplicationContext(), PantallaPrincipal.class);
@@ -132,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
 
                         SocketManager.initSocket();
                         SocketManager.connect();
-                        SocketManager.setListeners();
                         SocketManager.notifyUserConnected(usuarioModel.getUsername());
 
                         Log.d("Retrofit", "Inicio de secion exitoso");

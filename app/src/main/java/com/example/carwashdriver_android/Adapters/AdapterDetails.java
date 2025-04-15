@@ -1,12 +1,17 @@
 package com.example.carwashdriver_android.Adapters;
 
+import static android.widget.Toast.LENGTH_SHORT;
+
+import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -16,24 +21,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.carwashdriver_android.Models.DetailsModel;
 import com.example.carwashdriver_android.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class AdapterDetails extends RecyclerView.Adapter<AdapterDetails.ViewHolder> {
 
-    private ArrayList<DetailsModel> details;
+    private List<DetailsModel> details;
     private Context context;
-
     private boolean puedeInteractuar = false;
 
     public void setPuedeInteractuar(boolean puedeInteractuar) {
         this.puedeInteractuar = puedeInteractuar;
     }
 
+    private OnDetalleActionListener listener;
 
-    public AdapterDetails(ArrayList<DetailsModel> details, Context context) {
+    public AdapterDetails(List<DetailsModel> details, Context context, OnDetalleActionListener listener) {
         this.details = details;
         this.context = context;
+        this.listener = listener;
     }
+
 
     @NonNull
     @Override
@@ -45,11 +52,11 @@ public class AdapterDetails extends RecyclerView.Adapter<AdapterDetails.ViewHold
     @Override
     public void onBindViewHolder(@NonNull AdapterDetails.ViewHolder holder, int position) {
         DetailsModel detailsModel = details.get(position);
-        holder.codigoDetalle.setText("Servicio #"+detailsModel.getId());
+        holder.codigoDetalle.setText("Servicio #" + detailsModel.getId());
         holder.notaAdmin.setText(detailsModel.getNotaAdministrador());
         holder.servicio.setText(detailsModel.getServicio());
 
-        switch (detailsModel.getEstado()){
+        switch (detailsModel.getEstado()) {
             case 1:
                 holder.estado.setColorFilter(ContextCompat.getColor(holder.itemView.getContext(), R.color.amarillo_manteca));
                 break;
@@ -61,16 +68,20 @@ public class AdapterDetails extends RecyclerView.Adapter<AdapterDetails.ViewHold
                 break;
         }
 
-        holder.main.setOnClickListener(v -> {
+        holder.opciones.setOnClickListener(v -> {
             if (!puedeInteractuar) {
-                return; // Ignora el click si no ha empezado el trabajo
+                Toast.makeText(v.getContext(), "No se ha empezado el trabajo", LENGTH_SHORT).show();
+                return;
             }
-            if(holder.visibilidad){
-                holder.visibilidad=false;
-                holder.secondary.setVisibility(View.VISIBLE);
-            }else{
-                holder.visibilidad=true;
-                holder.secondary.setVisibility(View.GONE);
+            holder.visibilidad = !holder.visibilidad;
+            holder.secondary.setVisibility(holder.visibilidad ? View.GONE : View.VISIBLE);
+        });
+
+        holder.tomarNota.setOnClickListener(v -> abrirDialogoNota(detailsModel));
+
+        holder.finalizar.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onMarcarTrabajo(detailsModel);
             }
         });
 
@@ -80,12 +91,13 @@ public class AdapterDetails extends RecyclerView.Adapter<AdapterDetails.ViewHold
     public int getItemCount() {
         return details.size();
     }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView codigoDetalle,servicio,notaAdmin,contadorMultimedia;
+        TextView codigoDetalle, servicio, notaAdmin, contadorMultimedia;
         ImageView estado;
         LinearLayout secondary;
-        CardView main;
-        boolean visibilidad=true;
+        CardView opciones, tomarNota,finalizar;
+        boolean visibilidad = true;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -94,9 +106,36 @@ public class AdapterDetails extends RecyclerView.Adapter<AdapterDetails.ViewHold
             notaAdmin = itemView.findViewById(R.id.textNotaAdmin);
             contadorMultimedia = itemView.findViewById(R.id.textContador);
             estado = itemView.findViewById(R.id.imageEstado);
-            main = itemView.findViewById(R.id.itemListCardItemButtons);
+            opciones = itemView.findViewById(R.id.buttonOpciones);
             secondary = itemView.findViewById(R.id.groupButtons);
+            tomarNota = itemView.findViewById(R.id.buttonNota);
+            finalizar = itemView.findViewById(R.id.buttonFinalizar);
         }
     }
-}
 
+    private void abrirDialogoNota(DetailsModel model) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Ingrese su nota");
+
+        final EditText input = new EditText(context);
+        input.setHint("Escriba su nota");
+        if (model.getNota() != null && !model.getNota().isBlank()) {
+            input.setText(model.getNota());
+        }
+
+        builder.setView(input);
+        builder.setPositiveButton("Aceptar", (dialog, which) -> {
+            model.setNota(input.getText().toString());
+        });
+
+        builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public interface OnDetalleActionListener {
+        void onMarcarTrabajo(DetailsModel model);
+    }
+
+}

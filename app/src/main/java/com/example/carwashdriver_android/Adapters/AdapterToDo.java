@@ -54,10 +54,10 @@ public class AdapterToDo extends RecyclerView.Adapter<AdapterToDo.ViewHolder> {
                 break;
         }
         switch (toDo.getEstado()) {
-            case 1:
+            case 3:
                 holder.estado.setColorFilter(ContextCompat.getColor(holder.itemView.getContext(), R.color.amarillo_manteca));
                 break;
-            case 6:
+            case 4:
                 holder.estado.setColorFilter(ContextCompat.getColor(holder.itemView.getContext(), R.color.menta_pastel));
                 break;
             default:
@@ -67,14 +67,12 @@ public class AdapterToDo extends RecyclerView.Adapter<AdapterToDo.ViewHolder> {
 
         holder.cardItem.setOnClickListener(v -> {
             Intent intent = new Intent(context, DetallesTrabajo.class);
+            intent.putExtra("idCotiazcion",toDo.getId());
+            intent.putExtra("estadoCotizacion",toDo.getEstado());
             context.startActivity(intent);
             //((Activity) context).finish();
         });
     }
-
-    /*
-    * estados: 1:Aceptado, 2:Rechazado, 3:Pendiente, 4:Finalizado, 5:Faltante, 6:En proceso
-    * */
 
     @Override
     public int getItemCount() {

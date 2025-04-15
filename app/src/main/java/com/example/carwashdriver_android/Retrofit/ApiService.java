@@ -1,5 +1,6 @@
 package com.example.carwashdriver_android.Retrofit;
 
+import com.example.carwashdriver_android.Models.DetailsModel;
 import com.example.carwashdriver_android.Models.ToDoModel;
 import com.example.carwashdriver_android.Models.UsuarioModel;
 
@@ -31,5 +32,29 @@ public interface ApiService {
     @GET("trabajos/faltantes")
     Call<List<ToDoModel>> obtenerTrabajosPendientes(
             @Header("Authorization") String token
+    );
+
+    @PUT("trabajos/empezar/{id}")
+    Call<Void> empezarTrabajo(
+            @Header("Authorization") String token,
+            @Path("id") int idTrabajo
+    );
+
+    @GET("trabajos/infoGeneral/{id}")
+    Call<DetailsModel>obtenerDatosGeneralesTrabajo(
+            @Header("Authorization") String token,
+            @Path("id") int idCotizacion
+    );
+
+    @GET("trabajos/infoDetalles/{id}")
+    Call<List<DetailsModel>>obtenerDetallesTrabajo(
+            @Header("Authorization") String token,
+            @Path("id") int idCotizacion
+    );
+
+    @PUT("trabajos/check/{id}")
+    Call<Void> marcarTrabajo(
+            @Header("Authorization") String token,
+            @Path("id") int idTrabajo
     );
 }

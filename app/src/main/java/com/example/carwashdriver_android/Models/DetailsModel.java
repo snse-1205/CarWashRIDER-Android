@@ -1,29 +1,54 @@
 package com.example.carwashdriver_android.Models;
 
-import org.jetbrains.annotations.NonNls;
-
-import java.util.List;
-
 public class DetailsModel {
     int id;
-    String servicio;
+    String Servicio;
     String notaAdministrador;
     int estado;
-    List<String> multimedia;
+    String nota;
+    private int contadorMultimedia;
+    String nombreCLiente, marca,color,placa;
+    double lon,lat;
 
-    //para gets
-    public DetailsModel(int id, String servicio, String notaAdministrador, int estado) {
+    //para gets de la informacion principal
+    public DetailsModel(double lat, double lon, String placa, String color, String marca, String nombreCLiente) {
+        this.lat = lat;
+        this.lon = lon;
+        this.placa = placa;
+        this.color = color;
+        this.marca = marca;
+        this.nombreCLiente = nombreCLiente;
+    }
+
+    public DetailsModel(String placa, String color, String marca, String nombreCLiente) {
+        this.placa = placa;
+        this.color = color;
+        this.marca = marca;
+        this.nombreCLiente = nombreCLiente;
+    }
+
+
+    //para gets de los servicios
+    public DetailsModel(int id, String Servicio, String notaAdministrador, int estado) {
         this.id = id;
-        this.servicio = servicio;
+        this.Servicio = Servicio;
         this.notaAdministrador = notaAdministrador;
         this.estado = estado;
     }
 
     //para posts
-    public DetailsModel(int id, int estado, List<String> multimedia) {
+    public DetailsModel(int id, int estado, String nota) {
         this.id = id;
         this.estado = estado;
-        this.multimedia = multimedia;
+        this.nota = nota;
+    }
+
+    public int getContadorMultimedia() {
+        return contadorMultimedia;
+    }
+
+    public void setContadorMultimedia(int contadorMultimedia) {
+        this.contadorMultimedia = contadorMultimedia;
     }
 
     public int getId() {
@@ -35,11 +60,11 @@ public class DetailsModel {
     }
 
     public String getServicio() {
-        return servicio;
+        return Servicio;
     }
 
     public void setServicio(String servicio) {
-        this.servicio = servicio;
+        this.Servicio = servicio;
     }
 
     public String getNotaAdministrador() {
@@ -58,12 +83,77 @@ public class DetailsModel {
         this.estado = estado;
     }
 
-    public List<String> getMultimedia() {
-        return multimedia;
+    public String getNota() {
+        return nota;
     }
 
-    public void setMultimedia(List<String> multimedia) {
-        this.multimedia = multimedia;
+    public void setNota(String nota) {
+        this.nota = nota;
+    }
+
+    public String getNombreCLiente() {
+        return nombreCLiente;
+    }
+
+    public void setNombreCLiente(String nombreCLiente) {
+        this.nombreCLiente = nombreCLiente;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getPlaca() {
+        return placa;
+    }
+
+    public void setPlaca(String placa) {
+        this.placa = placa;
+    }
+
+    public double getLon() {
+        return lon;
+    }
+
+    public void setLon(double lon) {
+        this.lon = lon;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    @Override
+    public String toString() {
+        return "DetailsModel{" +
+                "id=" + id +
+                ", servicio='" + Servicio + '\'' +
+                ", notaAdministrador='" + notaAdministrador + '\'' +
+                ", estado=" + estado +
+                ", nota='" + nota + '\'' +
+                ", nombreCLiente='" + nombreCLiente + '\'' +
+                ", marca='" + marca + '\'' +
+                ", color='" + color + '\'' +
+                ", placa='" + placa + '\'' +
+                ", lon=" + lon +
+                ", lat=" + lat +
+                '}';
     }
 }
 
