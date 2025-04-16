@@ -28,7 +28,7 @@
     <!--Colores para el tema claro -->
     <color name="colorPrimaryLight">#4c979e</color> <!-- Color principal -->
     <color name="colorSecondaryLight">#757575</color> <!-- Color secundario -->
-    <color name="colorBackgroundLight">#B2F7EF</color> <!-- Fondo claro -->
+    <color name="colorBackgroundLight">#308290</color> <!-- Fondo claro -->
     <color name="colorOnBackgroundLight">#000000</color> <!-- Texto en el fondo claro -->
     <color name="colorSurfaceLight">#FCF8F2</color> <!-- Superficie clara -->
     <color name="colorOnSurfaceLight">#000000</color> <!-- Texto en superficie -->
