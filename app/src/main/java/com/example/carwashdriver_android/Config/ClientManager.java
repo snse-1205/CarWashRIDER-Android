@@ -1,4 +1,4 @@
-package com.example.carwashdriver_android.Retrofit;
+package com.example.carwashdriver_android.Config;
 import android.content.Context;
 import android.content.SharedPreferences;
 

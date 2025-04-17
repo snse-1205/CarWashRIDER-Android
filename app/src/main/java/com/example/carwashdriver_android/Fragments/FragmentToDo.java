@@ -6,47 +6,44 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.carwashdriver_android.Adapters.AdapterToDo;
+import com.example.carwashdriver_android.Config.SocketManager;
 import com.example.carwashdriver_android.Models.ToDoModel;
 import com.example.carwashdriver_android.R;
+import com.example.carwashdriver_android.Retrofit.ApiService;
+import com.example.carwashdriver_android.Config.ClientManager;
+import com.example.carwashdriver_android.Retrofit.RetrofitClient;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import io.socket.emitter.Emitter;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FragmentToDo extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public FragmentToDo() {
         // Required empty public constructor
     }
 
-    public static FragmentToDo newInstance(String param1, String param2) {
-        FragmentToDo fragment = new FragmentToDo();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private final Emitter.Listener trabajosListener = args -> {
+        requireActivity().runOnUiThread(() -> {
+            Log.d("SOCKET", "Actualización recibida, recargando trabajos...");
+            llenarDatos();
+        });
+    };
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -56,27 +53,59 @@ public class FragmentToDo extends Fragment {
         return inflater.inflate(R.layout.fragment_to_do, container, false);
     }
 
+    ClientManager clientManager;
+    private final ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+    List<ToDoModel> listaToDos = new ArrayList<>();
     RecyclerView recycleViewLista;
     AdapterToDo adapter;
+    private boolean isListenerRegistered = false;
+
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
-        ArrayList<ToDoModel> listaToDos = new ArrayList<>();
-
-        listaToDos.add(new ToDoModel(1, 1, 1,  "2025-04-10", "09:00"));
-        listaToDos.add(new ToDoModel(2, 2, 6,  "2025-04-11", "10:30"));
-        listaToDos.add(new ToDoModel(3, 1, 3,  "2025-04-12", "11:15"));
-        listaToDos.add(new ToDoModel(4, 2, 1,  "2025-04-13", "14:00"));
-        listaToDos.add(new ToDoModel(5, 1, 6, "2025-04-14", "08:45"));
-        listaToDos.add(new ToDoModel(6, 2, 2, "2025-04-15", "13:20"));
-        listaToDos.add(new ToDoModel(7, 1, 1,  "2025-04-16", "15:10"));
-        listaToDos.add(new ToDoModel(8, 2, 6,  "2025-04-17", "16:30"));
-        listaToDos.add(new ToDoModel(9, 1, 4, "2025-04-18", "17:00"));
-        listaToDos.add(new ToDoModel(10, 2, 1,  "2025-04-19", "12:00"));
-
-        adapter = new AdapterToDo(getContext(),listaToDos);
+        clientManager = new ClientManager(getContext());
         recycleViewLista =view.findViewById(R.id.recycleViewListToDo);
-        recycleViewLista.setLayoutManager((new LinearLayoutManager(requireContext())));
-        recycleViewLista.setAdapter(adapter);
+
+        llenarDatos();
+
+        if (!isListenerRegistered) {
+            SocketManager.escucharEvento("Trabajos", trabajosListener);
+            isListenerRegistered = true;
+        }
+
     }
+
+    private void llenarDatos() {
+        String token= "Bearer " + clientManager.getClientToken();
+        Call<List<ToDoModel>> call = apiService.obtenerTrabajosPendientes(token);
+        call.enqueue(new Callback<List<ToDoModel>>() {
+            @Override
+            public void onResponse(Call<List<ToDoModel>> call, Response<List<ToDoModel>> response) {
+                if(response.isSuccessful()){
+                    if(response.body() != null){
+                        listaToDos.clear();
+                        listaToDos.addAll(response.body());
+                        adapter = new AdapterToDo(getContext(),listaToDos);
+                        recycleViewLista.setLayoutManager((new LinearLayoutManager(requireContext())));
+                        recycleViewLista.setAdapter(adapter);
+                    }
+                }else{
+                    Log.e("Retrofit", "Respuesta vacía del servidor");
+                }
+            }
+            public void onFailure(Call<List<ToDoModel>> call, Throwable t) {
+                Log.e("Retrofit", "Fallo en la solicitud: " + t.getMessage());
+            }
+
+        });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        SocketManager.dejarDeEscucharEvento("Trabajos");
+        isListenerRegistered = false;  // <- esto es clave
+    }
+
 }

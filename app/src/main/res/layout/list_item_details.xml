@@ -27,17 +27,21 @@
             android:padding="16dp"
             android:gravity="center_vertical">
 
-            <!-- Información principal -->
+            <!-- Encabezado -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingStart="16dp">
+                android:paddingStart="16dp"
+                android:gravity="center_vertical">
 
+                <!-- Textos -->
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/textTitulo"
                         android:layout_width="wrap_content"
@@ -64,45 +68,49 @@
                         android:textSize="18sp" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:orientation="vertical"
-                    android:paddingTop="8dp">
+                <!-- Estado circular -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/imageEstadoWrapper"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="?attr/colorSurface"
+                    android:foreground="?attr/selectableItemBackground">
 
                     <ImageView
                         android:id="@+id/imageEstado"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="6dp"
                         android:src="@drawable/ic_estado"
                         app:tint="?attr/colorOnSurface" />
+                </com.google.android.material.card.MaterialCardView>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <ImageView
-                            android:id="@+id/imageIcono"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:src="@drawable/icon_multimedia_count"
-                            android:layout_marginEnd="4dp"
-                            app:tint="?attr/colorOnSurface" />
+                <!-- Botón extra a la derecha -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/buttonOpciones"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_marginStart="8dp"
+                    app:cardCornerRadius="25dp"
+                    app:cardElevation="4dp"
+                    app:cardBackgroundColor="?attr/colorSurface"
+                    android:foreground="?attr/selectableItemBackground">
 
-                        <TextView
-                            android:id="@+id/textContador"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="12"
-                            android:textColor="?attr/colorOnSurface"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                </LinearLayout>
-
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="8dp"
+                        android:src="@drawable/icon_list"
+                        app:tint="?attr/colorOnSurface" />
+                </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
+            <!-- Grupo de botones centrado -->
             <LinearLayout
                 android:id="@+id/groupButtons"
                 android:layout_width="match_parent"
@@ -110,99 +118,85 @@
                 android:orientation="horizontal"
                 android:paddingTop="8dp"
                 android:visibility="gone"
-                android:weightSum="3">
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp">
 
-                <!-- Botón Cancelar -->
+                <!-- Botón cancelar -->
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/buttonCancelar"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="4dp"
-                    app:cardCornerRadius="10dp"
+                    android:id="@+id/buttonNota"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="12dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="30dp"
                     app:cardElevation="4dp"
                     app:cardBackgroundColor="?attr/colorSurface"
                     android:foreground="?attr/selectableItemBackground">
 
-                    <LinearLayout
+                    <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:layout_height="match_parent"
                         android:padding="10dp"
-                        android:gravity="center">
-
-                        <TextView
-                            android:id="@+id/textCancelar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Cancelar"
-                            android:textColor="?attr/colorOnSurface"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
+                        android:src="@drawable/icon_note" />
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Botón Finalizar -->
+                <!-- Botón finalizar -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/buttonFinalizar"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="4dp"
-                    app:cardCornerRadius="10dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="12dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="30dp"
                     app:cardElevation="4dp"
                     app:cardBackgroundColor="?attr/colorSurface"
                     android:foreground="?attr/selectableItemBackground">
 
-                    <LinearLayout
+                    <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:layout_height="match_parent"
                         android:padding="10dp"
-                        android:gravity="center">
-
-                        <TextView
-                            android:id="@+id/textFinalizar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Finalizar"
-                            android:textColor="?attr/colorOnSurface"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
+                        android:src="@drawable/icon_checkbox" />
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Botón Guardar Multimedia -->
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/buttonContador"
-                    android:layout_width="0dp"
+                <!-- Botón multimedia con contador -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="4dp"
-                    app:cardBackgroundColor="?attr/colorSurface"
-                    android:foreground="?attr/selectableItemBackground">
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/buttonContador"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:cardCornerRadius="30dp"
+                        app:cardElevation="4dp"
+                        app:cardBackgroundColor="?attr/colorSurface"
+                        android:foreground="?attr/selectableItemBackground">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="10dp"
+                            android:src="@drawable/icon_file_export" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:id="@+id/textContador"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="10dp"
-                        android:gravity="center">
-
-                        <TextView
-                            android:id="@+id/textGuardar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Multimedia"
-                            android:textColor="?attr/colorOnSurface"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:layout_marginEnd="4dp" />
-
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
+                        android:layout_marginStart="8dp"
+                        android:text="12"
+                        android:textSize="18sp"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
